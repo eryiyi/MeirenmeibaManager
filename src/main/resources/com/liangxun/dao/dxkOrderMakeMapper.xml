@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.AppDxkOrderMakeDao">
+    <resultMap id="dxkorder" type="com.liangxunwang.unimanager.model.DxkOrder">
+        <id column="dxk_order_id" property="dxk_order_id"/>
+        <result column="emp_id" property="emp_id"/>
+        <result column="createtime" property="createtime"/>
+        <result column="typeid" property="typeid"/>
+    </resultMap>
+
+    <insert id="saveDxkOrder" parameterType="com.liangxunwang.unimanager.model.DxkOrder">
+        insert into dxk_order(dxk_order_id, emp_id, createtime, typeid)
+        VALUES (#{dxk_order_id}, #{emp_id}, #{createtime}, #{typeid})
+    </insert>
+
+    <select id="findIsExist" resultMap="dxkorder">
+        SELECT * from dxk_order
+        WHERE createtime &gt; #{startTime} AND createtime &lt; #{endTime}
+        <if test="emp_id != null and emp_id != ''">
+            AND emp_id = #{emp_id}
+        </if>
+        <if test="typeid != null and typeid != ''">
+            AND typeid = #{typeid}
+        </if>
+    </select>
+
+</mapper>

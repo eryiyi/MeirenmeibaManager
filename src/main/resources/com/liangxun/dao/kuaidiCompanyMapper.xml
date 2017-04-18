@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.KuaidiCompanyDao">
+    <resultMap id="kuaidiCompany" type="com.liangxunwang.unimanager.model.KuaidiCompany">
+        <id column="kuaidi_company_id" property="kuaidi_company_id"/>
+        <result column="kuaidi_company_name" property="kuaidi_company_name"/>
+        <result column="kuaidi_company_code" property="kuaidi_company_code"/>
+        <result column="is_use" property="is_use"/>
+        <result column="top_number" property="top_number"/>
+    </resultMap>
+
+    <select id="lists" resultMap="kuaidiCompany">
+        SELECT * from kuaidi_company
+        WHERE 1=1
+        <if test="is_use != null and is_use != ''">
+            AND is_use = #{is_use}
+        </if>
+        ORDER BY top_number DESC
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.KuaidiCompany">
+        INSERT INTO kuaidi_company(kuaidi_company_id, kuaidi_company_name, kuaidi_company_code, top_number)
+        VALUES (#{kuaidi_company_id}, #{kuaidi_company_name}, #{kuaidi_company_code},  #{top_number,jdbcType=VARCHAR})
+    </insert>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM kuaidi_company where kuaidi_company_id = #{kuaidi_company_id}
+    </delete>
+
+    <select id="findById" parameterType="String" resultMap="kuaidiCompany">
+        SELECT * FROM kuaidi_company where kuaidi_company_id=#{kuaidi_company_id}
+    </select>
+
+    <select id="findByCode" parameterType="String" resultMap="kuaidiCompany">
+        SELECT * FROM kuaidi_company where kuaidi_company_code=#{kuaidi_company_code}
+    </select>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.KuaidiCompany">
+        UPDATE kuaidi_company SET kuaidi_company_name=#{kuaidi_company_name},
+         kuaidi_company_code=#{kuaidi_company_code} ,
+         is_use=#{is_use,jdbcType=VARCHAR},
+         top_number=#{top_number,jdbcType=VARCHAR}
+         WHERE kuaidi_company_id=#{kuaidi_company_id}
+    </update>
+</mapper>
