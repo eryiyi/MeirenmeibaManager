@@ -7,8 +7,8 @@ public class Constants {
     //服务器地址
 
 //      public static final String URL = "http://192.168.0.225:8080/";
-    public static final String URL = "http://157j1274e3.iask.in/";
-//        public static final String URL = "http://114.215.41.142:8080/";
+//    public static final String URL = "http://157j1274e3.iask.in/";
+        public static final String URL = "http://114.215.41.142:8080/";
 
     public static final String DOWNLOAD_URL = "http://a.app.qq.com/o/simple.jsp?pkgname=com.lbins.myapp";
     //注册用默认会员等级--青铜会员
