@@ -114,7 +114,7 @@
     </group>
 
     <group id="NOTICE_HOUTAI_MANAGER" name="后台帮助">
-        <permission id="ADD_NOTICE_HOUTAI" name="添加帮主"/>
+        <permission id="ADD_NOTICE_HOUTAI" name="添加帮助"/>
         <permission id="NOTICE_HOUTAI_LIST" name="帮助列表"/>
     </group>
 

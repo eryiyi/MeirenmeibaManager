@@ -41,6 +41,25 @@ public class ManagerInfo {
     private String lx_class_id;//分类
     private String company_yyzz;//营业执照
     private String is_card;//是否是定向卡商家 默认0否  1是
+    private String empcount;//1.个人（会员）在店铺消费次数限制，（充值后一年时间）
+    private String allcount;//2.店铺扫码总次数的限制，
+
+
+    public String getEmpcount() {
+        return empcount;
+    }
+
+    public void setEmpcount(String empcount) {
+        this.empcount = empcount;
+    }
+
+    public String getAllcount() {
+        return allcount;
+    }
+
+    public void setAllcount(String allcount) {
+        this.allcount = allcount;
+    }
 
     public String getIs_card() {
         return is_card;

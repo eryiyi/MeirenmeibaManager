@@ -317,4 +317,24 @@
         UPDATE PAOPAO_SHOPPING_ORDER SET status= #{status}  WHERE order_no= #{order_no}
     </update>
 
+
+    <select id="selectDxkOrderCountById" resultType="long">
+        SELECT COUNT(*) from PAOPAO_SHOPPING_ORDER WHERE 1='1'
+        <if test="seller_emp_id != null and seller_emp_id != ''">
+            AND SELLER_EMP_ID = #{seller_emp_id}
+        </if>
+        <if test="emp_id != null and emp_id != ''">
+            AND emp_id = #{emp_id}
+        </if>
+        <if test="start != null and start != ''">
+            AND create_time &gt;= #{start}
+        </if>
+        <if test="end != null and end != ''">
+            AND create_time &lt;= #{end}
+        </if>
+        <if test="is_dxk_order != null and is_dxk_order != ''">
+            AND is_dxk_order = #{is_dxk_order}
+        </if>
+    </select>
+
 </mapper>

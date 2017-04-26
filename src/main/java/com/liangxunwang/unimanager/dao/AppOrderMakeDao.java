@@ -74,4 +74,7 @@ public interface AppOrderMakeDao {
 
     //根据订单号查询订单状态
     OrderVo findOrderByOrderNo(String order_no);
+
+    //查询商家定向卡订单数量
+    long selectDxkOrderCountById(Map<String,Object> map);
  }

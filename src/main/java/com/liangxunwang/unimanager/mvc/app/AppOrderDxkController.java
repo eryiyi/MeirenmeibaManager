@@ -53,11 +53,15 @@ public class AppOrderDxkController extends ControllerConstants {
                         return toJSONString(ERROR_4);
                     }else if (e.getMessage().equals("has_exist_class")){
                         return toJSONString(ERROR_5);
+                    }else if (e.getMessage().equals("has_dxk_count_out")){
+                        return toJSONString(ERROR_7);//超出店铺扫码总次数的限制
+                    }else if (e.getMessage().equals("has_dxk_count_out_emp")){
+                        return toJSONString(ERROR_8);//超出个人（会员）在店铺消费次数限制，（充值后一年时间）
                     }
                     return toJSONString(ERROR_1);
                 }
             }else {
-                return toJSONString(ERROR_1);
+                return toJSONString(ERROR_6);//消费会员不是定向卡会员
             }
 
         }else{

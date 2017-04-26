@@ -2,7 +2,9 @@ package com.liangxunwang.unimanager.service.account;
 
 import com.liangxunwang.unimanager.dao.AppDxkOrderMakeDao;
 import com.liangxunwang.unimanager.dao.AppOrderMakeDao;
+import com.liangxunwang.unimanager.dao.CardEmpDao;
 import com.liangxunwang.unimanager.dao.ManagerInfoDao;
+import com.liangxunwang.unimanager.model.CardEmp;
 import com.liangxunwang.unimanager.model.DxkOrder;
 import com.liangxunwang.unimanager.model.ManagerInfo;
 import com.liangxunwang.unimanager.model.Order;
@@ -39,6 +41,10 @@ public class OrderDxkService implements  SaveService {
     @Qualifier("managerInfoDao")
     private ManagerInfoDao managerInfoDao;
 
+    @Autowired
+    @Qualifier("cardEmpDao")
+    private CardEmpDao cardEmpDao;
+
     @Override
     public Object save(Object object) throws ServiceException {
         Order order = (Order) object;
@@ -58,7 +64,7 @@ public class OrderDxkService implements  SaveService {
                 mapType.put("endTime", DateUtil.getEndDay());
                 DxkOrder dxkOrder = appDxkOrderMakeDao.findIsExist(mapType);
                 if(dxkOrder != null){
-                    //说明存在了
+                    //说明存在了 已经消费了该类别下的商品了
                     throw new ServiceException("has_exist_class");
                 }
             }
@@ -74,6 +80,32 @@ public class OrderDxkService implements  SaveService {
         if(order1 != null){
             //说明存在了
             throw new ServiceException("has_exist");
+        }
+        //判断是否超出店铺扫码总次数限制了
+        String allcount = managerInfo.getAllcount();//店铺扫码总次数
+        String empcount = managerInfo.getEmpcount();//店铺扫码总次数--会员一年的
+        Map<String,Object> mapDxkCount = new HashMap<String, Object>();
+        mapDxkCount.put("seller_emp_id", order.getSeller_emp_id());
+        mapDxkCount.put("is_dxk_order", "1");
+        long dxkCount1 = appOrderMakeDao.selectDxkOrderCountById(mapDxkCount);
+        if(!StringUtil.isNullOrEmpty(allcount) && !StringUtil.isNullOrEmpty(empcount)){
+            if(Integer.parseInt(allcount) > dxkCount1){
+                //说明还能扫描
+                //判断个人（会员）在店铺消费次数限制，（充值后一年时间）
+                CardEmp cardEmp = cardEmpDao.findById(order.getEmp_id());
+                if(cardEmp != null){
+                    String lx_card_emp_start_time = cardEmp.getLx_card_emp_start_time();
+                    mapDxkCount.put("start", lx_card_emp_start_time);
+                    mapDxkCount.put("emp_id", order.getEmp_id());
+                    long dxkCount2 = appOrderMakeDao.selectDxkOrderCountById(mapDxkCount);//会员在一年之中在该店铺消费的总次数
+                    if(Integer.parseInt(empcount) <= dxkCount2){
+                        throw new ServiceException("has_dxk_count_out_emp");
+                    }
+                }
+            }else {
+                //说明已经超出限制了
+                throw new ServiceException("has_dxk_count_out");
+            }
         }
         order.setOrder_no(UUIDFactory.random());
         order.setCreate_time(System.currentTimeMillis()+"");
@@ -96,6 +128,6 @@ public class OrderDxkService implements  SaveService {
             }
         }
 
-        return null;
+        return 200;
     }
 }

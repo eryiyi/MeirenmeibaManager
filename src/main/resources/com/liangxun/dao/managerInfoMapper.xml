@@ -27,6 +27,8 @@
         <result column="is_check" property="is_check"/>
         <result column="type_id" property="type_id"/>
         <result column="is_card" property="is_card"/>
+        <result column="empcount" property="empcount"/>
+        <result column="allcount" property="allcount"/>
 
         <result column="yingye_time_start" property="yingye_time_start"/>
         <result column="yingye_time_end" property="yingye_time_end"/>
@@ -62,6 +64,8 @@
         <result column="is_check" property="is_check"/>
         <result column="type_id" property="type_id"/>
         <result column="is_card" property="is_card"/>
+        <result column="empcount" property="empcount"/>
+        <result column="allcount" property="allcount"/>
 
         <result column="yingye_time_start" property="yingye_time_start"/>
         <result column="yingye_time_end" property="yingye_time_end"/>
@@ -142,7 +146,7 @@
         pay_number=#{payNumber},check_name=#{checkName},mobile=#{mobile},
         company_address=#{company_address},company_pic=#{company_pic},
         company_person=#{company_person}, company_tel=#{company_tel},lat_company=#{lat_company},lng_company=#{lng_company},
-        company_detail=#{company_detail},company_name=#{company_name},lx_class_id=#{lx_class_id}
+        company_detail=#{company_detail},company_name=#{company_name},lx_class_id=#{lx_class_id},empcount=#{empcount, jdbcType=VARCHAR},allcount=#{allcount, jdbcType=VARCHAR}
          WHERE INFO_ID=#{id}
     </update>
 

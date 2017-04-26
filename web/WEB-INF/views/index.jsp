@@ -557,7 +557,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <c:if test="${um:permission('ADD_NOTICE_HOUTAI', sessionScope.powers)}">
-                                <li><a href="javascript:void(0);" onclick="toPage('/toAddNoticeHoutai','')">添加帮主</a></li>
+                                <li><a href="javascript:void(0);" onclick="toPage('/toAddNoticeHoutai','')">添加帮助</a></li>
                             </c:if>
                             <c:if test="${um:permission('NOTICE_HOUTAI_LIST', sessionScope.powers)}">
                                 <li><a href="javascript:void(0);" onclick="toPage('/listNoticeHoutai','1')">帮助列表</a></li>

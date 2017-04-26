@@ -293,6 +293,25 @@
                     </c:if>
 
                     <div class="form-group">
+                        <label class="col-sm-2 control-label">*个人（会员）在店铺消费次数限制，（充值后一年时间）*</label>
+
+                        <div class="col-sm-4">
+                            <input type="text" id="empcount" placeholder="个人（会员）在店铺消费次数限制，（充值后一年时间）" class="form-control"
+                                   value="${info.empcount}" data-toggle="tooltip" data-placement="bottom"
+                                   title="Tooltip for name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">*店铺扫码总次数的限制*</label>
+
+                        <div class="col-sm-4">
+                            <input type="text" id="allcount" placeholder="店铺扫码总次数的限制" class="form-control"
+                                   value="${info.allcount}" data-toggle="tooltip" data-placement="bottom"
+                                   title="Tooltip for name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <div class="col-sm-9 col-sm-offset-3">
                             <button type="button" class="btn btn-primary" onclick="saveManagerInfo()">更新</button>
                         </div>
@@ -499,6 +518,16 @@
 
         var lat_company = $("#lat_company").val();
         var lng_company = $("#lng_company").val();
+        var empcount = $("#empcount").val();
+        var allcount = $("#allcount").val();
+        if (empcount.replace(/\s/g, '') == '') {
+            alert("请输入个人（会员）在店铺消费次数限制，（充值后一年时间）");
+            return;
+        }
+        if (allcount.replace(/\s/g, '') == '') {
+            alert("店铺扫码总次数的限制");
+            return;
+        }
 
         $.ajax({
             cache: true,
@@ -520,7 +549,9 @@
                 "lat_company": lat_company,
                 "lng_company": lng_company,
                 "company_yyzz": company_yyzz,
-                "mobile": mobile
+                "mobile": mobile,
+                "empcount": empcount,
+                "allcount": allcount
             },
 
             async: false,
